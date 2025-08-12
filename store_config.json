@@ -1,0 +1,158 @@
+{
+  "categories": ["Resources", "Servers", "Addons"],
+  "items": [
+    {
+      "id": "ram_512",
+      "name": "512MB RAM",
+      "description": "Add 512MB RAM to your account permanently",
+      "price": 100,
+      "category": "Resources",
+      "resources": {
+        "ram": 512,
+        "cpu": 0,
+        "disk": 0,
+        "databases": 0,
+        "allocations": 0,
+        "backups": 0
+      },
+      "duration_days": null,
+      "enabled": true
+    },
+    {
+      "id": "ram_1024",
+      "name": "1GB RAM",
+      "description": "Add 1GB RAM to your account permanently",
+      "price": 180,
+      "category": "Resources",
+      "resources": {
+        "ram": 1024,
+        "cpu": 0,
+        "disk": 0,
+        "databases": 0,
+        "allocations": 0,
+        "backups": 0
+      },
+      "duration_days": null,
+      "enabled": true
+    },
+    {
+      "id": "cpu_50",
+      "name": "50% CPU",
+      "description": "Add 50% CPU to your account permanently",
+      "price": 75,
+      "category": "Resources",
+      "resources": {
+        "ram": 0,
+        "cpu": 50,
+        "disk": 0,
+        "databases": 0,
+        "allocations": 0,
+        "backups": 0
+      },
+      "duration_days": null,
+      "enabled": true
+    },
+    {
+      "id": "disk_1gb",
+      "name": "1GB Disk Space",
+      "description": "Add 1GB disk space to your account permanently",
+      "price": 50,
+      "category": "Resources",
+      "resources": {
+        "ram": 0,
+        "cpu": 0,
+        "disk": 1024,
+        "databases": 0,
+        "allocations": 0,
+        "backups": 0
+      },
+      "duration_days": null,
+      "enabled": true
+    },
+    {
+      "id": "basic_server",
+      "name": "Basic Server Plan",
+      "description": "1GB RAM, 100% CPU, 2GB Disk for 30 days",
+      "price": 500,
+      "category": "Servers",
+      "resources": {
+        "ram": 1024,
+        "cpu": 100,
+        "disk": 2048,
+        "databases": 2,
+        "allocations": 2,
+        "backups": 2
+      },
+      "duration_days": 30,
+      "enabled": true
+    },
+    {
+      "id": "premium_server",
+      "name": "Premium Server Plan",
+      "description": "2GB RAM, 200% CPU, 4GB Disk for 30 days",
+      "price": 1000,
+      "category": "Servers",
+      "resources": {
+        "ram": 2048,
+        "cpu": 200,
+        "disk": 4096,
+        "databases": 5,
+        "allocations": 5,
+        "backups": 5
+      },
+      "duration_days": 30,
+      "enabled": true
+    },
+    {
+      "id": "extra_database",
+      "name": "Extra Database",
+      "description": "Add 1 additional database slot permanently",
+      "price": 25,
+      "category": "Addons",
+      "resources": {
+        "ram": 0,
+        "cpu": 0,
+        "disk": 0,
+        "databases": 1,
+        "allocations": 0,
+        "backups": 0
+      },
+      "duration_days": null,
+      "enabled": true
+    },
+    {
+      "id": "extra_allocation",
+      "name": "Extra Port Allocation",
+      "description": "Add 1 additional port allocation permanently",
+      "price": 30,
+      "category": "Addons",
+      "resources": {
+        "ram": 0,
+        "cpu": 0,
+        "disk": 0,
+        "databases": 0,
+        "allocations": 1,
+        "backups": 0
+      },
+      "duration_days": null,
+      "enabled": true
+    },
+    {
+      "id": "extra_backup",
+      "name": "Extra Backup Slot",
+      "description": "Add 1 additional backup slot permanently",
+      "price": 40,
+      "category": "Addons",
+      "resources": {
+        "ram": 0,
+        "cpu": 0,
+        "disk": 0,
+        "databases": 0,
+        "allocations": 0,
+        "backups": 1
+      },
+      "duration_days": null,
+      "enabled": true
+    }
+  ]
+}
