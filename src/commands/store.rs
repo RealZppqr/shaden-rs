@@ -1,7 +1,6 @@
 use anyhow::Result;
 use serenity::prelude::*;
-use serenity::model::application::interaction::application_command::ApplicationCommandInteraction;
-use serenity::model::application::interaction::InteractionResponseType;
+use serenity::all::{ApplicationCommandInteraction, InteractionResponseType};
 use crate::services::Database;
 use crate::config::Config;
 
@@ -201,12 +200,12 @@ async fn buy_store_item(ctx: &Context, command: &ApplicationCommandInteraction, 
 
     // Apply the resource update if available
     if let Some(resources) = &store_item.resources {
-        user.resources.ram += resources.ram;
-        user.resources.cpu += resources.cpu;
-        user.resources.disk += resources.disk;
-        user.resources.databases += resources.databases;
-        user.resources.allocations += resources.allocations;
-        user.resources.backups += resources.backups;
+        user.resources.ram += resources.ram as i64;
+        user.resources.cpu += resources.cpu as i64;
+        user.resources.disk += resources.disk as i64;
+        user.resources.databases += resources.databases as i64;
+        user.resources.allocations += resources.allocations as i64;
+        user.resources.backups += resources.backups as i64;
     }
 
     // Update user in database

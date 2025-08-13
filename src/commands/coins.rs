@@ -1,7 +1,6 @@
 use anyhow::Result;
 use serenity::prelude::*;
-use serenity::model::application::interaction::application_command::ApplicationCommandInteraction;
-use serenity::model::application::interaction::InteractionResponseType;
+use serenity::all::{ApplicationCommandInteraction, InteractionResponseType};
 use crate::services::Database;
 use crate::errors::BotError;
 use crate::config::Config;
