@@ -2,8 +2,7 @@ use anyhow::Result;
 use serenity::prelude::*;
 use serenity::framework::standard::StandardFramework;
 use serenity::model::gateway::Ready;
-use serenity::model::application::interaction::{Interaction, InteractionResponseType};
-use serenity::model::application::command::Command;
+use serenity::all::{Interaction, Command, InteractionResponseType};
 use tracing::{info, error};
 
 mod config;
@@ -32,7 +31,7 @@ impl EventHandler for Handler {
     }
 
     async fn interaction_create(&self, ctx: Context, interaction: Interaction) {
-        if let Interaction::ApplicationCommand(command) = interaction {
+        if let Interaction::Command(command) = interaction {
             let result = match command.data.name.as_str() {
                 "login" => commands::coins::login(&ctx, &command, &self.database).await,
                 "coins" => commands::coins::handle_coins(&ctx, &command, &self.database).await,
@@ -46,7 +45,7 @@ impl EventHandler for Handler {
                 "admin" => commands::admin::handle_admin(&ctx, &command, &self.database, &self.config).await,
                 "help" => commands::help(&ctx, &command).await,
                 _ => {
-                    command.create_interaction_response(&ctx.http, |response| {
+                    command.create_response(&ctx.http, |response| {
                         response
                             .kind(InteractionResponseType::ChannelMessageWithSource)
                             .interaction_response_data(|message| {

@@ -52,7 +52,7 @@ impl QueueService {
 
     pub async fn dequeue(&self) -> BotResult<Option<QueueJob>> {
         let mut conn = self.database.get_redis_connection().await?;
-        let job_json: Option<String> = conn.brpop("job_queue", 1).await?;
+        let job_json: Option<String> = conn.brpop("job_queue", 1.0).await?;
         
         if let Some(json) = job_json {
             let job: QueueJob = serde_json::from_str(&json)

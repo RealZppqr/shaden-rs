@@ -1,7 +1,6 @@
 use anyhow::Result;
 use serenity::prelude::*;
-use serenity::model::application::command::{Command, CommandOptionType};
-use serenity::model::application::interaction::application_command::ApplicationCommandInteraction;
+use serenity::all::{Command, CommandOptionType, ApplicationCommandInteraction};
 use crate::config::Config;
 
 pub mod coins;
@@ -13,11 +12,11 @@ pub mod join_rewards;
 
 pub async fn register_commands(ctx: &Context, config: &Config) -> Result<()> {
     // Register all slash commands
-    Command::create_global_application_command(&ctx.http, |command| {
+    Command::create_global_command(&ctx.http, |command| {
         command.name("login").description("Register or login to the bot")
     }).await?;
 
-    Command::create_global_application_command(&ctx.http, |command| {
+    Command::create_global_command(&ctx.http, |command| {
         command
             .name("coins")
             .description("Manage your coins")
@@ -56,7 +55,7 @@ pub async fn register_commands(ctx: &Context, config: &Config) -> Result<()> {
     }).await?;
 
     if config.enable_transfer {
-        Command::create_global_application_command(&ctx.http, |command| {
+        Command::create_global_command(&ctx.http, |command| {
             command
                 .name("transfer")
                 .description("Transfer coins to another user")
@@ -78,7 +77,7 @@ pub async fn register_commands(ctx: &Context, config: &Config) -> Result<()> {
         }).await?;
     }
 
-    Command::create_global_application_command(&ctx.http, |command| {
+    Command::create_global_command(&ctx.http, |command| {
         command
             .name("servers")
             .description("Manage your servers")
@@ -117,7 +116,7 @@ pub async fn register_commands(ctx: &Context, config: &Config) -> Result<()> {
     }).await?;
 
     if config.enable_delete {
-        Command::create_global_application_command(&ctx.http, |command| {
+        Command::create_global_command(&ctx.http, |command| {
             command
                 .name("delete")
                 .description("Delete a server")
@@ -132,7 +131,7 @@ pub async fn register_commands(ctx: &Context, config: &Config) -> Result<()> {
     }
 
     if config.enable_renew {
-        Command::create_global_application_command(&ctx.http, |command| {
+        Command::create_global_command(&ctx.http, |command| {
             command
                 .name("renew")
                 .description("Renew a server to prevent suspension")
@@ -155,7 +154,7 @@ pub async fn register_commands(ctx: &Context, config: &Config) -> Result<()> {
         }).await?;
     }
 
-    Command::create_global_application_command(&ctx.http, |command| {
+    Command::create_global_command(&ctx.http, |command| {
         command
             .name("store")
             .description("Browse and purchase items")
@@ -193,7 +192,7 @@ pub async fn register_commands(ctx: &Context, config: &Config) -> Result<()> {
 pub async fn help(ctx: &Context, command: &ApplicationCommandInteraction) -> Result<()> {
     command.create_interaction_response(&ctx.http, |response| {
         response
-            .kind(serenity::model::application::interaction::InteractionResponseType::ChannelMessageWithSource)
+            .kind(InteractionResponseType::ChannelMessageWithSource)
             .interaction_response_data(|message| {
                 message
                     .embed(|embed| {

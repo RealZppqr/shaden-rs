@@ -1,7 +1,6 @@
 use anyhow::Result;
 use serenity::prelude::*;
-use serenity::model::application::interaction::application_command::ApplicationCommandInteraction;
-use serenity::model::application::interaction::InteractionResponseType;
+use serenity::all::{ApplicationCommandInteraction, InteractionResponseType};
 use crate::services::{Database, QueueService, QueueJob, JobType};
 use crate::models::{Server, Resources, ServerStatus};
 use crate::config::Config;
@@ -301,7 +300,7 @@ async fn view_server(ctx: &Context, command: &ApplicationCommandInteraction, dat
     Ok(())
 }
 
-async fn delete_server_command(ctx: &Context, command: &ApplicationCommandInteraction, database: &Database, config: &Config) -> Result<()> {
+pub async fn delete_server_command(ctx: &Context, command: &ApplicationCommandInteraction, database: &Database, config: &Config) -> Result<()> {
     if !config.enable_delete {
         command.create_interaction_response(&ctx.http, |response| {
             response
@@ -348,7 +347,7 @@ async fn delete_server_command(ctx: &Context, command: &ApplicationCommandIntera
             }
 
             // Perform deletion
-            match database.delete_server(server_id, discord_id).await {
+            match database.delete_server(server_id).await {
                 Ok(_) => {
                     // Add deletion job to queue
                     let queue_service = QueueService::new(database.clone());
@@ -506,7 +505,9 @@ pub async fn renew_server(ctx: &Context, command: &ApplicationCommandInteraction
 
             // Perform renewal
             match database.renew_server(server_id, duration, renewal_cost).await {
-                Ok(new_expiry) => {
+                Ok(_) => {
+                    // Get updated server to get new expiry date
+                    let updated_server = database.get_server(server_id).await?.unwrap();
                     command.create_interaction_response(&ctx.http, |response| {
                         response
                             .kind(InteractionResponseType::ChannelMessageWithSource)
@@ -517,7 +518,7 @@ pub async fn renew_server(ctx: &Context, command: &ApplicationCommandInteraction
                                             .title("🔄 Server Renewed Successfully!")
                                             .description(format!("Server **{}** has been renewed for {} days!", server.name, duration))
                                             .field("Cost", format!("{} coins", renewal_cost), true)
-                                            .field("New Expiry Date", new_expiry.format("%Y-%m-%d %H:%M UTC").to_string(), true)
+                                            .field("New Expiry Date", updated_server.expires_at.format("%Y-%m-%d %H:%M UTC").to_string(), true)
                                             .field("Remaining Coins", format!("{} coins", user.coins - renewal_cost), true)
                                             .color(0x00ff00)
                                     })

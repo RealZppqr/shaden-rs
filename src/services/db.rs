@@ -162,4 +162,18 @@ impl Database {
             .await?;
         Ok(())
     }
+
+    pub async fn renew_server(&self, server_id: &str, duration_days: u32, cost: i64) -> BotResult<()> {
+        let uuid = uuid::Uuid::parse_str(server_id)
+            .map_err(|_| BotError::InvalidInput("Invalid server ID".to_string()))?;
+        
+        let mut server = self.get_server(server_id).await?
+            .ok_or(BotError::ServerNotFound)?;
+        
+        // Extend the server expiration
+        server.expires_at = server.expires_at + chrono::Duration::days(duration_days as i64);
+        
+        self.update_server(&server).await?;
+        Ok(())
+    }
 }
